@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+/* CryoLink — ice-blue palette (light default) */
+:root,
+.light {
+  --bg: #eef6fc;
+  --surface: #ffffff;
+  --border: #cfe0f0;
+  --text-primary: #1a3352;
+  --text-secondary: #5a7a9a;
+  --navy: #3d7ab8;
+  --navy-deep: #2a5f94;
+  --teal: #2d9aaa;
+  --teal-soft-bg: #e4f4f8;
+  --cyan: #5eb8e8;
+  --ice: #b8ddf5;
+  --amber: #d89614;
+  --red: #c1272d;
+  --radius-data: 2px;
+  --radius-control: 6px;
+  --shadow-soft: 0 4px 24px rgba(61, 122, 184, 0.1);
+  --shadow-card: 0 1px 2px rgba(61, 122, 184, 0.06), 0 12px 32px rgba(61, 122, 184, 0.08);
+  /* Layout: mobile (<1024px) defaults; laptop overrides below */
+  --layout-gutter-x: 1rem;
+  --layout-gutter-y: 1.25rem;
+  --layout-content-max: 100%;
+  --layout-page-title: 1.375rem;
+}
+
+.dark {
+  --bg: #0d1828;
+  --surface: #122238;
+  --border: #2a4568;
+  --text-primary: #e8f2fa;
+  --text-secondary: #94b0cc;
+  --navy: #6eb0e8;
+  --navy-deep: #4a90c4;
+  --teal: #4db8c8;
+  --teal-soft-bg: #142830;
+  --cyan: #7ec8f0;
+  --ice: #3a6a94;
+  --amber: #c48a1a;
+  --red: #d44a50;
+  --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-teal: var(--teal);
+  --color-teal-soft-bg: var(--teal-soft-bg);
+  --color-cyan: var(--cyan);
+  --color-ice: var(--ice);
+  --color-amber: var(--amber);
+  --color-red: var(--red);
+  --color-background: var(--bg);
+  --color-foreground: var(--text-primary);
+  --color-muted-foreground: var(--text-secondary);
+  --color-ring: var(--cyan);
+  --font-sans: var(--font-plex-sans);
+  --font-display: var(--font-source-serif);
+  --font-mono: var(--font-plex-mono);
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-plex-sans), system-ui, sans-serif;
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Laptop breakpoint (1024px+) — distinct from mobile layout */
+@media (min-width: 1024px) {
+  :root,
+  .light,
+  .dark {
+    --layout-gutter-x: 2rem;
+    --layout-gutter-y: 2rem;
+    --layout-content-max: 88rem;
+    --layout-page-title: 1.875rem;
+  }
+}
+
+.shell-main {
+  padding-inline: var(--layout-gutter-x);
+  padding-block: var(--layout-gutter-y);
+}
+
+.shell-content {
+  width: 100%;
+  max-width: var(--layout-content-max);
+  margin-inline: auto;
+}
+
+/* Hide on laptop (1024px+). Does not force display on mobile — pair with flex/block as needed. */
+@media (min-width: 1024px) {
+  .layout-mobile-only {
+    display: none !important;
+  }
+}
+
+.layout-laptop-only {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .layout-laptop-only {
+    display: block;
+  }
+
+  .layout-laptop-inline {
+    display: inline;
+  }
+}
+
+/* Wide data tables scroll inside the card on small screens */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.font-display {
+  font-family: var(--font-source-serif), Georgia, serif;
+}
+
+.font-mono {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+/* —— Motion —— */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(8px, -12px) scale(1.03);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0.35;
+  }
+}
+
+.animate-in {
+  animation: fade-in 280ms ease-out both;
+}
+
+.animate-rise-in {
+  animation: rise-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.rich-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.28s ease,
+    border-color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .rich-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--cyan) 45%, var(--border));
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+/* Backdrop orbs */
+.cryolink-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.55;
+  animation: float-soft 14s ease-in-out infinite;
+}
+
+.cryolink-orb-a {
+  top: -8%;
+  left: -5%;
+  width: min(52vw, 420px);
+  height: min(52vw, 420px);
+  background: radial-gradient(circle, #9ed4f5 0%, transparent 70%);
+}
+
+.cryolink-orb-b {
+  bottom: -12%;
+  right: -8%;
+  width: min(48vw, 380px);
+  height: min(48vw, 380px);
+  background: radial-gradient(circle, #7eb8e8 0%, transparent 68%);
+  animation-delay: -5s;
+}
+
+.cryolink-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--cyan) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--cyan) 8%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black, transparent);
+  opacity: 0.45;
+}
+
+.cryolink-mark-pulse {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cyan) 30%, transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.hq-sidebar-gradient {
+  background: linear-gradient(165deg, #6eb0e8 0%, #4a94d4 38%, #3d7ab8 100%);
+}
